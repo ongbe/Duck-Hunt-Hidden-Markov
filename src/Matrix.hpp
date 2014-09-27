@@ -1,6 +1,6 @@
-#include <iostream>
 #include <vector>
 #include <sstream>
+#include <iostream>
 
 
 using namespace std;
@@ -9,6 +9,20 @@ class Matrix {
 	vector<vector<double>> data;
 
 public:
+
+	Matrix() {}
+
+	Matrix(int n, int m) {
+		Matrix();
+		for(int i = 0; i < n; n++) {
+			vector<double> row;
+			for(int j = 0; j < m; m++) {
+				row.push_back(0);
+			}
+			data.push_back(row);
+		}
+	}
+
 	int n() {
 		return data.size();
 	}

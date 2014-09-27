@@ -5,5 +5,5 @@
 int main() {
 	HMM model = HMM::readfromstdin();
 	cerr << model.str();
-	//model.nextemission();
+	cerr << model.nextemission().str() << endl;
 }

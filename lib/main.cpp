@@ -1,4 +1,4 @@
-#include "Player.hpp"
+#include "../src/Player.hpp"
 #include "Client.hpp"
 #include "GameServer.hpp"
 

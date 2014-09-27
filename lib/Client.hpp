@@ -1,7 +1,7 @@
 #ifndef _DUCKS_CLIENT_HPP_
 #define _DUCKS_CLIENT_HPP_
 
-#include "Player.hpp"
+#include "../src/Player.hpp"
 #include <vector>
 #include <string>
 #include <iostream>

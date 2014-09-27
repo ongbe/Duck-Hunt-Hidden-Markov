@@ -2,7 +2,7 @@ both: bin/player2server bin/server2player bin/duckhunt
 	./bin/duckhunt server load enviroments/SouthEmissions.in < bin/player2server | ./bin/duckhunt verbose > bin/player2server
 
 bin/duckhunt: src/player.cpp
-	g++ src/*.cpp -Wall -std=c++0x -o bin/duckhunt
+	g++ src/player.cpp lib/*.cpp -Wall -std=c++0x -o bin/duckhunt
 
 bin/player2server bin/server2player:
 	mkfifo bin/player2server bin/server2player

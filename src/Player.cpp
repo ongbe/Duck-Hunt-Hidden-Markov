@@ -14,10 +14,10 @@ namespace ducks
 		 */
 
 		// This line choose not to shoot
-		return cDontShoot;
+		//return cDontShoot;
 
 		//This line would predict that bird 0 will move right and shoot at it
-		//return Action(0, MOVE_RIGHT);
+		return Action(0, MOVE_RIGHT);
 	}
 
 	std::vector<ESpecies> Player::guess(const GameState &pState, const Deadline &pDue) {

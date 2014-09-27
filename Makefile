@@ -15,3 +15,9 @@ client: bin/player2server bin/server2player bin/duckhunt
 
 ParadiseEmissions: bin/player2server bin/server2player bin/duckhunt
 	./bin/duckhunt server load enviroments/ParadiseEmissions.in < bin/player2server | ./bin/duckhunt verbose > bin/player2server
+
+test: nextemissiontest
+
+nextemissiontest: src/nextemission.cpp
+	g++ src/nextemission.cpp -Wall -std=c++0x -o bin/nextemission
+	cat enviroments/nextemissiontest | ./bin/nextemission

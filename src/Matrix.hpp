@@ -1,6 +1,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <assert.h>
 
 
 using namespace std;
@@ -61,11 +62,12 @@ public:
     }
 
     Matrix operator*(Matrix other) {
+    	assert(m() == other.n());
     	Matrix product = Matrix(n(), other.m());
     	for(int i = 0; i < product.n(); i++) {
     		for(int j = 0; j < product.m(); j++) {
     			product[i][j] = 0;
-    			for(int k = 0; k < product.m()+1; k++) {
+    			for(int k = 0; k < other.n(); k++) {
     				product[i][j] += data[i][k] * other[k][j];
     			}
     		}

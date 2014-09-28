@@ -11,7 +11,8 @@ class HMM {
 
 public:
 
-	HMM(Matrix A, Matrix B, Matrix q) {		this->A = A;
+	HMM(Matrix A, Matrix B, Matrix q) {
+		this->A = A;
 		this->B = B;
 		this->q = q;
 	}
@@ -22,22 +23,8 @@ public:
 		return ss.str();
 	}
 
-	Matrix transitions() {
-		double max = 0;
-		int index;
-		for(int i = 0; i < q.m(); i++) {
-			if(q[0][i] > max) {
-				max = q[0][i];
-				index = i;
-			}
-		}
-		Matrix transisions = Matrix(1, A.m());
-		transisions[0] = A[index];
-		return transisions;
-	}
-
 	Matrix nextemission() {
-		return transitions() * B;
+		return q * A * B;
 	}
 
 	static HMM readfromstdin() {

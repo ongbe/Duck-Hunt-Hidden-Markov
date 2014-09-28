@@ -24,3 +24,6 @@ nextemissiontest: src/nextemission.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 
 clean:
 	rm bin/*
+
+kattisnextemission:
+	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm1 src/nextemission.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"

@@ -13,10 +13,9 @@ public:
 	Matrix() {}
 
 	Matrix(int n, int m) {
-		Matrix();
-		for(int i = 0; i < n; n++) {
+		for(int i = 0; i < n; i++) {
 			vector<double> row;
-			for(int j = 0; j < m; m++) {
+			for(int j = 0; j < m; j++) {
 				row.push_back(0);
 			}
 			data.push_back(row);
@@ -42,9 +41,36 @@ public:
 		return ss.str();
 	}
 
+	string kattis() {
+		stringstream ss;
+		ss << n() << " " << m() << " ";
+		for(int i = 0; i < n(); i++) {
+			for(int j = 0; j < m(); j++) {
+				ss << data[i][j];
+				if(!(i == n()-1 && j == m()-1)) {
+					ss << " ";
+				}
+			}
+		}
+		return ss.str();
+	}
+
 	vector<double> &operator[](int i)
     {
         return data.at(i);
+    }
+
+    Matrix operator*(Matrix other) {
+    	Matrix product = Matrix(n(), other.m());
+    	for(int i = 0; i < product.n(); i++) {
+    		for(int j = 0; j < product.m(); j++) {
+    			product[i][j] = 0;
+    			for(int k = 0; k < product.m()+1; k++) {
+    				product[i][j] += data[i][k] * other[k][j];
+    			}
+    		}
+    	}
+    	return product;
     }
 
 	static Matrix readfromstdin() {

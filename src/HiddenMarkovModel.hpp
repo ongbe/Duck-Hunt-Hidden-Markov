@@ -37,7 +37,7 @@ public:
 	}
 
 	Matrix nextemission() {
-		return transitions() * A;
+		return transitions() * B;
 	}
 
 	static HMM readfromstdin() {

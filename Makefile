@@ -18,6 +18,9 @@ ParadiseEmissions: bin/player2server bin/server2player bin/duckhunt
 
 test: nextemissiontest
 
-nextemissiontest: src/nextemission.cpp src/matrix.hpp
+nextemissiontest: src/nextemission.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/nextemission.cpp -Wall -std=c++0x -o bin/nextemission
-	cat enviroments/nextemissiontest | ./bin/nextemission
+	bash -c "cat enviroments/nextemissiontest | ./bin/nextemission | diff <(echo 1 3 0.3 0.6 0.1) -"
+
+clean:
+	rm bin/*

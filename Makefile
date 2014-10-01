@@ -16,7 +16,7 @@ client: bin/player2server bin/server2player bin/duckhunt
 ParadiseEmissions: bin/player2server bin/server2player bin/duckhunt
 	./bin/duckhunt server load enviroments/ParadiseEmissions.in < bin/player2server | ./bin/duckhunt verbose > bin/player2server
 
-test: nextemissiontest
+test: nextemissiontest probabilityofemissionsequencetest
 
 nextemissiontest: src/nextemission.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/nextemission.cpp -Wall -std=c++0x -o bin/nextemission
@@ -27,3 +27,10 @@ clean:
 
 kattisnextemission:
 	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm1 src/nextemission.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"
+
+kattisprobofemission:
+	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm2 src/probabilityofemissionsequence.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	
+
+probabilityofemissionsequencetest: src/probabilityofemissionsequence.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
+	g++ src/probabilityofemissionsequence.cpp -Wall -std=c++0x -o bin/probabilityofemissionsequencetest
+	bash -c "cat enviroments/probabilityofemissionsequencetest | ./bin/probabilityofemissionsequencetest | diff <(echo 0.090276) -"

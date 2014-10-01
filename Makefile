@@ -29,8 +29,8 @@ kattisnextemission:
 	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm1 src/nextemission.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"
 
 kattisprobofemission:
-	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm2 src/probabilityofemissionsequence.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	
+	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm2 src/emissionprob.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	
 
-probabilityofemissionsequencetest: src/probabilityofemissionsequence.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
-	g++ src/probabilityofemissionsequence.cpp -Wall -std=c++0x -o bin/probabilityofemissionsequencetest
+probabilityofemissionsequencetest: src/emissionprob.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
+	g++ src/emissionprob.cpp -Wall -std=c++0x -o bin/probabilityofemissionsequencetest
 	bash -c "cat enviroments/probabilityofemissionsequencetest | ./bin/probabilityofemissionsequencetest | diff <(echo 0.090276) -"

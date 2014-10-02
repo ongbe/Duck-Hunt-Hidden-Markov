@@ -85,4 +85,8 @@ public:
 		return chance;
 	}
 
+	vector<int> mostLiklySequence(Emission emission) {
+		return vector<int>();
+	}
+
 };

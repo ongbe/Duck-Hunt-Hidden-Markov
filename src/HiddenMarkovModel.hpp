@@ -63,24 +63,24 @@ public:
 	}
 
 	double test(Emission emission) {
-		Matrix last = Matrix(q.m(), 1);
+		vector<double> last(q.m(), 0);
 		for(int i = 0; i < q.m(); i++) {
-			last[i][0] = q[0][i] * B[i][emission[0]];
+			last[i] = q[0][i] * B[i][emission[0]];
 		}
 		for(int i = 1; i < emission.size(); i++) {
-			Matrix next = Matrix(q.m(), 1);
+			vector<double> next(q.m(), 0);
 			for(int k = 0; k < q.m(); k++) {
 				double sum = 0;
 				for(int j = 0; j < q.m(); j++) {
-					sum += last[j][0] * A[j][k];
+					sum += last[j] * A[j][k];
 				}
-				next[k][0] = sum * B[k][emission[i]];
+				next[k] = sum * B[k][emission[i]];
 			}
 			last = next;
 		}
 		double chance = 0;
-		for(int i = 0; i < last.n(); i++) {
-			chance += last[i][0];
+		for(int i = 0; i < last.size(); i++) {
+			chance += last[i];
 		}
 		return chance;
 	}

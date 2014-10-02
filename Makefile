@@ -33,4 +33,4 @@ kattisprobofemission:
 
 probabilityofemissionsequencetest: src/emissionprob.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/emissionprob.cpp -Wall -std=c++0x -o bin/probabilityofemissionsequencetest
-	bash -c "cat enviroments/probabilityofemissionsequencetest | ./bin/probabilityofemissionsequencetest | diff <(echo 0.090276) -"
+	bash -c "cat enviroments/probabilityofemissionsequencetest | ./bin/probabilityofemissionsequencetest | diff <(echo 0.0902755) -"

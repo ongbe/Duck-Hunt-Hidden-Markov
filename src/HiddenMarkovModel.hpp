@@ -55,6 +55,10 @@ public:
 		return q * A * B;
 	}
 
+	int K() {
+		return q.m();
+	}
+
 	static HMM readfromstdin() {
 		Matrix A = Matrix::readfromstdin();
 		Matrix B = Matrix::readfromstdin();
@@ -63,15 +67,15 @@ public:
 	}
 
 	double test(Emission emission) {
-		vector<double> last(q.m(), 0);
-		for(int i = 0; i < q.m(); i++) {
+		vector<double> last(K(), 0);
+		for(int i = 0; i < K(); i++) {
 			last[i] = q[0][i] * B[i][emission[0]];
 		}
 		for(int i = 1; i < emission.size(); i++) {
-			vector<double> next(q.m(), 0);
-			for(int k = 0; k < q.m(); k++) {
+			vector<double> next(K(), 0);
+			for(int k = 0; k < K(); k++) {
 				double sum = 0;
-				for(int j = 0; j < q.m(); j++) {
+				for(int j = 0; j < K(); j++) {
 					sum += last[j] * A[j][k];
 				}
 				next[k] = sum * B[k][emission[i]];
@@ -85,8 +89,60 @@ public:
 		return chance;
 	}
 
-	vector<int> mostLiklySequence(Emission emission) {
-		return vector<int>();
+	int mostLiklyState(vector<double> options) {
+		int best = 0;
+		double max = 0;
+		cerr << endl;
+		for(int i = 0; i < options.size(); i++) {
+			if(options[i] > max) {
+				max = options[i];
+				best = i;
+			}
+		}
+		return best;
+	}
+
+
+	vector<int> viterbi(Emission emission) {
+		// https://en.wikipedia.org/wiki/Viterbi_algorithm
+		int T = emission.size();
+		Matrix T_1(K(), T);
+		int T_2[K()][T];
+		for(int i = 0; i < K(); i++) {
+			T_1[i][0] = q[0][i];
+			T_2[i][0] = 0;
+		}
+		for(int i = 1; i < T; i++) {
+			for(int j = 0; j < K(); j++) {
+				double max = -1;
+				int argmax = -1;
+				for(int k = 0; k < K(); k++) {
+					double tmp = T_1[k][i - 1] * A[k][j] * B[k][emission[i - 1]];
+					if(tmp > max) {
+						max = tmp;
+						argmax = k;
+					}
+				}
+				T_1[j][i] = max;
+				T_2[j][i] = argmax;
+			}
+		}
+		vector<int> Z(T);
+		vector<int> X(T);
+		double max = -1;
+		for(int k = 0; k < K(); k++) {
+			double tmp = T_1[k][T - 1];
+			if(tmp > max) {
+				max = tmp;
+				Z[T - 1] = k;
+			}
+		}
+		X[T - 1] = Z[T - 1];
+		for(int i = T - 1; i > 0; i--) {
+			Z[i - 1] = T_2[Z[i]][i];
+			X[i - 1] = Z[i - 1];
+		}
+		return X;
 	}
 
 };

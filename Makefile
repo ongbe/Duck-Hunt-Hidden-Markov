@@ -36,7 +36,7 @@ probabilityofemissionsequencetest: src/emissionprob.cpp src/Matrix.hpp src/Hidde
 	bash -c "cat enviroments/probabilityofemissionsequencetest | ./bin/probabilityofemissionsequencetest | diff <(echo 0.0902755) -"
 
 mostlikly: src/mostliklyseq.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
-	g++ src/mostliklyseq.cpp -Wall -std=c++0x -o bin/mostliklyseq
+	g++ src/mostliklyseq.cpp -Wall -g -std=c++0x -o bin/mostliklyseq
 	bash -c "cat enviroments/mostliklytest | ./bin/mostliklyseq | diff <(echo 0 1 2 1) -"
 
 kattismostlikly:

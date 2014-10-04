@@ -67,12 +67,12 @@ public:
 	}
 
 	double test(Emission emission) {
-		vector<double> last(K(), 0);
+		vector<double> last(K());
 		for(int i = 0; i < K(); i++) {
 			last[i] = q[0][i] * B[i][emission[0]];
 		}
 		for(int i = 1; i < emission.size(); i++) {
-			vector<double> next(K(), 0);
+			vector<double> next(K());
 			for(int k = 0; k < K(); k++) {
 				double sum = 0;
 				for(int j = 0; j < K(); j++) {
@@ -89,27 +89,13 @@ public:
 		return chance;
 	}
 
-	int mostLiklyState(vector<double> options) {
-		int best = 0;
-		double max = 0;
-		cerr << endl;
-		for(int i = 0; i < options.size(); i++) {
-			if(options[i] > max) {
-				max = options[i];
-				best = i;
-			}
-		}
-		return best;
-	}
-
-
 	vector<int> viterbi(Emission emission) {
 		// https://en.wikipedia.org/wiki/Viterbi_algorithm
 		int T = emission.size();
 		Matrix T_1(K(), T);
 		int T_2[K()][T];
 		for(int i = 0; i < K(); i++) {
-			T_1[i][0] = q[0][i];
+			T_1[i][0] = q[0][i] * B[i][emission[0]];
 			T_2[i][0] = 0;
 		}
 		for(int i = 1; i < T; i++) {
@@ -117,7 +103,7 @@ public:
 				double max = -1;
 				int argmax = -1;
 				for(int k = 0; k < K(); k++) {
-					double tmp = T_1[k][i - 1] * A[k][j] * B[k][emission[i - 1]];
+					double tmp = T_1[k][i - 1] * A[k][j] * B[j][emission[i]];
 					if(tmp > max) {
 						max = tmp;
 						argmax = k;

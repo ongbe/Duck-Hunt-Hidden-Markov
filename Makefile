@@ -41,3 +41,10 @@ mostlikly: src/mostliklyseq.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 
 kattismostlikly:
 	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm3 src/mostliklyseq.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	
+
+estimatemodel: src/estimatemodel.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
+	g++ src/estimatemodel.cpp -Wall -g -std=c++0x -o bin/estimatemodel
+	bash -c "cat enviroments/estimatemodeltest | ./bin/estimatemodel | diff <(echo 0 1 2 1) -"
+
+kattismostlikly:
+	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm4 src/estimatemodel.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	

@@ -33,6 +33,6 @@ mostlikly: src/mostliklyseq.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/mostliklyseq.cpp -Wall -g -std=c++0x -o bin/mostliklyseq
 	bash -c "cat enviroments/mostliklytest | ./bin/mostliklyseq | diff <(echo 0 1 2 1) -"
 
-estimatemodel: src/estimatemodel.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
+estimatemodel: src/estimatemodel.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp src/BaumWelch.hpp
 	g++ src/estimatemodel.cpp -Wall -g -std=c++0x -o bin/estimatemodel
 	bash -c "cat enviroments/estimatemodeltest | ./bin/estimatemodel | diff <(cat enviroments/esitmatemodel.out) -"

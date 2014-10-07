@@ -4,4 +4,4 @@ hmm3:
 
 hmm4:
 	kth:ai:hmm4
-	src/estimatemodel.cpp src/*
+	src/estimatemodel.cpp src/*.hpp

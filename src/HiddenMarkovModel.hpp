@@ -1,21 +1,24 @@
+#ifndef HMM_H
+#define HMM_H
+
 #include "./Matrix.hpp"
 using namespace std;
 
-
-typedef vector<double> Emission;
-typedef vector<int> Sequence;
 
 class HMM {
 
 public:
 
-	Matrix A;
-	Matrix B;
-	Matrix q;
+	typedef vector<double> Emission;
+	typedef vector<int> Sequence;
+
+	Matrix<> A;
+	Matrix<> B;
+	Matrix<> q;
 
 	HMM() {}
 
-	HMM(Matrix A, Matrix B, Matrix q) {
+	HMM(Matrix<> A, Matrix<> B, Matrix<> q) {
 		this->A = A;
 		this->B = B;
 		this->q = q;
@@ -23,11 +26,13 @@ public:
 
 	string str() {
 		stringstream ss;
-		ss << "A =\n" << A.str() << "\nB = \n" << B.str() << "\nq = \n" << q.str() << "\n";
+		ss << "A =\n" << A.str();
+		ss << "\nB = \n" << B.str();
+		ss << "\nq = \n" << q.str() << "\n";
 		return ss.str();
 	}
 
-	Matrix nextemission() {
+	Matrix<> nextemission() {
 		return q * A * B;
 	}
 
@@ -36,9 +41,9 @@ public:
 	}
 
 	static HMM readfromstdin() {
-		Matrix A = Matrix::readfromstdin();
-		Matrix B = Matrix::readfromstdin();
-		Matrix q = Matrix::readfromstdin();
+		Matrix<> A = Matrix<>::readfromstdin();
+		Matrix<> B = Matrix<>::readfromstdin();
+		Matrix<> q = Matrix<>::readfromstdin();
 		return HMM(A, B, q);
 	}
 
@@ -47,10 +52,6 @@ public:
 		ss << A.kattis() << "\n";
 		ss << B.kattis() << "\n";
 		return ss.str();
-	}
-
-	void learn(vector<int> sequence) {
-
 	}
 
 	double test(Emission emission) {
@@ -79,7 +80,7 @@ public:
 	vector<int> viterbi(Emission emission) {
 		// https://en.wikipedia.org/wiki/Viterbi_algorithm
 		int T = emission.size();
-		Matrix T_1(K(), T);
+		Matrix<> T_1(K(), T);
 		int T_2[K()][T];
 		for(int i = 0; i < K(); i++) {
 			T_1[i][0] = q[0][i] * B[i][emission[0]];
@@ -119,3 +120,5 @@ public:
 	}
 
 };
+
+#endif

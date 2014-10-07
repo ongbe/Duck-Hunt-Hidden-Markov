@@ -1,13 +1,16 @@
+#ifndef Matrix_H
+#define Matrix_H
+
 #include <vector>
 #include <sstream>
 #include <iostream>
 #include <assert.h>
-
-
 using namespace std;
 
+
+template <typename T = double>
 class Matrix {
-	vector<vector<double>> data;
+	vector<vector<T>> data;
 
 public:
 
@@ -15,7 +18,7 @@ public:
 
 	Matrix(int n, int m) {
 		for(int i = 0; i < n; i++) {
-			vector<double> row;
+			vector<T> row;
 			for(int j = 0; j < m; j++) {
 				row.push_back(0);
 			}
@@ -56,14 +59,14 @@ public:
 		return ss.str();
 	}
 
-	vector<double> &operator[](int i)
+	vector<T> &operator[](int i)
     {
         return data.at(i);
     }
 
-    Matrix operator*(Matrix other) {
+    Matrix<T> operator*(Matrix other) {
     	assert(m() == other.n());
-    	Matrix product = Matrix(n(), other.m());
+    	Matrix product(n(), other.m());
     	for(int i = 0; i < product.n(); i++) {
     		for(int j = 0; j < product.m(); j++) {
     			product[i][j] = 0;
@@ -75,8 +78,8 @@ public:
     	return product;
     }
 
-	static Matrix readfromstdin() {
-		Matrix matrix = Matrix();
+	static Matrix<T> readfromstdin() {
+		Matrix matrix;
 		int n;
 		int m;
 		cin >> n;
@@ -94,3 +97,5 @@ public:
 		return matrix;
 	}
 };
+
+#endif

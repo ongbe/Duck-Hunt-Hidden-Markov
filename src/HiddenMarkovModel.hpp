@@ -1,35 +1,7 @@
 #include "./Matrix.hpp"
-
-
-class Emission {
-
-	vector<int> sequence;
-	
-public:
-
-	int &operator[](int i) {
-		return sequence[i];
-	}
-	
-	static Emission readfromstdin() {
-		Emission emission = Emission();
-		int n;
-		cin >> n;
-		for(int j = 0; j < n; j++) {
-			int cell;
-			cin >> cell;
-			emission.sequence.push_back(cell);
-		}
-		return emission;
-	}
-
-	int size() {
-		return sequence.size();
-	}
-
-};
-
+#include "./Emission.hpp"
 using namespace std;
+
 
 class HMM {
 
@@ -73,7 +45,9 @@ public:
 		return ss.str();
 	}
 
-	void baumWelch(Emission emission) {}
+	void baumWelch(Emission emission) {
+
+	}
 
 	double test(Emission emission) {
 		vector<double> last(K());

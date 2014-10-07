@@ -1,11 +1,12 @@
 #include <iostream>
 #include "./HiddenMarkovModel.hpp"
+#include "./helpers.hpp"
 using namespace std;
 
 
 int main() {
 	HMM model = HMM::readfromstdin();
-	Emission emission = Emission::readfromstdin();
-	model.baumWelch(emission);
+	Sequence sequence = Helpers::readfromstdin<int>();
+	model.learn(sequence);
 	cout << model.kattis();
 }

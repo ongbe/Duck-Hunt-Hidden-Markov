@@ -1,15 +1,19 @@
 #include "./Matrix.hpp"
-#include "./Emission.hpp"
 using namespace std;
 
 
+typedef vector<double> Emission;
+typedef vector<int> Sequence;
+
 class HMM {
+
+public:
 
 	Matrix A;
 	Matrix B;
 	Matrix q;
 
-public:
+	HMM() {}
 
 	HMM(Matrix A, Matrix B, Matrix q) {
 		this->A = A;
@@ -45,7 +49,7 @@ public:
 		return ss.str();
 	}
 
-	void baumWelch(Emission emission) {
+	void learn(vector<int> sequence) {
 
 	}
 

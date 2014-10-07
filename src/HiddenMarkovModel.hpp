@@ -1,7 +1,7 @@
 #ifndef HMM_H
 #define HMM_H
 
-#include "./Matrix.hpp"
+#include "Matrix.hpp"
 using namespace std;
 
 

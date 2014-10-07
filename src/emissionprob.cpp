@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./HiddenMarkovModel.hpp"
+#include "HiddenMarkovModel.hpp"
 using namespace std;
 
 

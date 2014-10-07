@@ -1,7 +1,7 @@
 #include <iostream>
-#include "./HiddenMarkovModel.hpp"
-#include "./BaumWelch.hpp"
-#include "./helpers.hpp"
+#include "HiddenMarkovModel.hpp"
+#include "BaumWelch.hpp"
+#include "helpers.hpp"
 using namespace std;
 
 

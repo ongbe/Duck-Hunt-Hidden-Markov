@@ -1,8 +1,8 @@
 #ifndef BaumWelch_H
 #define BaumWelch_H
 
-#include "./Matrix.hpp"
-#include "./HiddenMarkovModel.hpp"
+#include "Matrix.hpp"
+#include "HiddenMarkovModel.hpp"
 #include <math.h>
 #include <utility>
 

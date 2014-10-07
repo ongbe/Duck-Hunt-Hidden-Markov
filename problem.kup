@@ -1,3 +1,7 @@
+duckhunt:
+	kth:ai:duckhunt
+	src/player.cpp src/*.hpp
+
 hmm3:
 	kth:ai:hmm3
 	src/mostliklyseq.cpp src/*.hpp

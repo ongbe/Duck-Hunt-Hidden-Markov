@@ -66,6 +66,15 @@ public:
 		return HMM(A, B, q);
 	}
 
+	string kattis() {
+		stringstream ss;
+		ss << A.kattis() << "\n";
+		ss << B.kattis() << "\n";
+		return ss.str();
+	}
+
+	void baumWelch(Emission emission) {}
+
 	double test(Emission emission) {
 		vector<double> last(K());
 		for(int i = 0; i < K(); i++) {

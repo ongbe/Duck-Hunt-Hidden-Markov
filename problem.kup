@@ -1,3 +1,7 @@
 hmm3:
 	kth:ai:hmm3
 	src/mostliklyseq.cpp src/*.hpp
+
+hmm4:
+	kth:ai:hmm4
+	src/estimatemodel.cpp src/*

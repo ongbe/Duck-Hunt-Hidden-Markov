@@ -16,7 +16,7 @@ client: bin/player2server bin/server2player bin/duckhunt
 ParadiseEmissions: bin/player2server bin/server2player bin/duckhunt
 	./bin/duckhunt server load enviroments/ParadiseEmissions.in < bin/player2server | ./bin/duckhunt verbose > bin/player2server
 
-test: nextemissiontest probabilityofemissionsequencetest mostlikly
+test: nextemissiontest probabilityofemissionsequencetest mostlikly estimatemodel
 
 nextemissiontest: src/nextemission.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/nextemission.cpp -Wall -std=c++0x -o bin/nextemission
@@ -24,12 +24,6 @@ nextemissiontest: src/nextemission.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 
 clean:
 	rm bin/*
-
-kattisnextemission:
-	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm1 src/nextemission.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"
-
-kattisprobofemission:
-	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm2 src/emissionprob.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	
 
 probabilityofemissionsequencetest: src/emissionprob.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/emissionprob.cpp -Wall -std=c++0x -o bin/probabilityofemissionsequencetest
@@ -39,12 +33,6 @@ mostlikly: src/mostliklyseq.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/mostliklyseq.cpp -Wall -g -std=c++0x -o bin/mostliklyseq
 	bash -c "cat enviroments/mostliklytest | ./bin/mostliklyseq | diff <(echo 0 1 2 1) -"
 
-kattismostlikly:
-	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm3 src/mostliklyseq.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	
-
 estimatemodel: src/estimatemodel.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
 	g++ src/estimatemodel.cpp -Wall -g -std=c++0x -o bin/estimatemodel
-	bash -c "cat enviroments/estimatemodeltest | ./bin/estimatemodel | diff <(echo 0 1 2 1) -"
-
-kattismostlikly:
-	open "https://kth.kattis.com/submissions/`kattis -f -p kth:ai:hmm4 src/estimatemodel.cpp src/HiddenMarkovModel.hpp src/Matrix.hpp | pcregrep -o1 'Submission ID: (\d+)\.'`"	
+	bash -c "cat enviroments/estimatemodeltest | ./bin/estimatemodel | diff <(cat enviroments/esitmatemodel.out) -"

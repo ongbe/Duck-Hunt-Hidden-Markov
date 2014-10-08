@@ -16,11 +16,11 @@ public:
 
 	Matrix() {}
 
-	Matrix(int n, int m) {
+	Matrix(int n, int m, T initial = 0) {
 		for(int i = 0; i < n; i++) {
 			vector<T> row;
 			for(int j = 0; j < m; j++) {
-				row.push_back(0);
+				row.push_back(initial);
 			}
 			data.push_back(row);
 		}

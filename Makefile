@@ -1,8 +1,11 @@
 both: bin/player2server bin/server2player bin/duckhunt
 	./bin/duckhunt server load enviroments/SouthEmissions.in < bin/player2server | ./bin/duckhunt verbose > bin/player2server
 
-bin/duckhunt: src/player.cpp
-	g++ src/player.cpp lib/*.cpp -Wall -std=c++0x -o bin/duckhunt
+bin/duckhunt: src/player.cpp src/BaumWelch.hpp src/Matrix.hpp src/HiddenMarkovModel.hpp src/helpers.hpp
+	g++ src/player.cpp -g lib/*.cpp -Wall -std=c++0x -o bin/duckhunt
+
+bin/server:
+	g++ lib/*.cpp src/player.cpp -g -std=c++0x -o bin/server
 
 clean:
 	rm -r bin/*
@@ -11,7 +14,7 @@ bin/player2server bin/server2player:
 	mkfifo bin/player2server bin/server2player
 
 server: bin/player2server bin/server2player bin/duckhunt
-	./bin/duckhunt verbose server < bin/player2server > bin/server2player
+	./bin/duckhunt verbose load enviroments/NorthEmissions.in server < bin/player2server > bin/server2player
 
 client: bin/player2server bin/server2player bin/duckhunt
 	./bin/duckhunt verbose > bin/player2server < bin/server2player
@@ -25,11 +28,11 @@ ParadiseEmissions SouthEmissions EastEmissions NorthEmissions WestEmissions: bin
 # HMM
 
 nextemissiontest: src/nextemission.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
-	g++ src/nextemission.cpp -Wall -std=c++0x -o bin/nextemission
+	g++ -g src/nextemission.cpp -Wall -std=c++0x -o bin/nextemission
 	bash -c "cat enviroments/nextemissiontest | ./bin/nextemission | diff <(echo 1 3 0.3 0.6 0.1) -"
 
 probabilityofemissionsequencetest: src/emissionprob.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp
-	g++ src/emissionprob.cpp -Wall -std=c++0x -o bin/probabilityofemissionsequencetest
+	g++ -g src/emissionprob.cpp -Wall -std=c++0x -o bin/probabilityofemissionsequencetest
 	bash -c "cat enviroments/probabilityofemissionsequencetest | ./bin/probabilityofemissionsequencetest | diff <(echo 0.0902755) -"
 
 mostlikly: src/mostliklyseq.cpp src/Matrix.hpp src/HiddenMarkovModel.hpp

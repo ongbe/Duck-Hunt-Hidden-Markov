@@ -156,7 +156,7 @@ class BaumWelch {
 
 public:
 
-	int maxIterations = 25;
+	int maxIterations = 1;
 
 	BaumWelch(HMM * hmm, HMM::Sequence sequence) {
 		this->hmm = hmm;
@@ -169,6 +169,7 @@ public:
 	double train() {
 		double stability;
 		for(int i = 0; i < maxIterations; i++) {
+			cerr << i << endl << hmm->str() << endl;
 			stability = compute();
 		}
 		return stability;

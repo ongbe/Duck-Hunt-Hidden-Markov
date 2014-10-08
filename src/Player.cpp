@@ -10,26 +10,27 @@
 namespace ducks
 {
 
-	vector<HMM> species;
-	vector<int> species_map(COUNT_SPECIES);
-	vector<int> known_birds;
+	vector<HMM> hmms;				// species -> hmm
 	int round = -1;
 
 	Player::Player() {
-		Matrix<> iniA(COUNT_SPECIES, COUNT_SPECIES, 1.0/COUNT_SPECIES);		// TODO Randomize for better convergence
-		Matrix<> iniB(COUNT_SPECIES, COUNT_MOVE, (double) 1 / COUNT_MOVE);
-		Matrix<> iniq(1, COUNT_MOVE, 1.0/COUNT_MOVE);
+		Matrix<> iniA(COUNT_SPECIES, COUNT_SPECIES);
+		Matrix<> iniB(COUNT_SPECIES, COUNT_MOVE);
+		Matrix<> iniq(1, COUNT_SPECIES);
 
 		for(int i = 0; i < COUNT_SPECIES; i++) {
+			iniA.scramble();
+			iniB.scramble();
+			iniq.scramble();
 			HMM hmm(iniA, iniB, iniq);
-			species.push_back(hmm);
+			hmms.push_back(hmm);
 		}
 	}
 
 	Action Player::shoot(const GameState &pState, const Deadline &pDue) {
 		if(round != pState.getRound()) {
 			cerr << "Round " << pState.getRound() << " with " << pState.getNumBirds() << " birds" << endl;
-			known_birds = vector<int>(pState.getNumBirds(), 0);
+			round = pState.getRound();
 		}
 		return cDontShoot;
 	}
@@ -56,8 +57,15 @@ namespace ducks
 		 * If you made any guesses, you will find out the true species of those birds in this function.
 		 */
 		cerr << "REVeal!" << endl;
-		for (int i = 0; i < pSpecies.size(); ++i) {
-			cerr << pSpecies[i] << " ";
+		for(int i = 0; i < pSpecies.size(); i++) {
+			Bird bird = pState.getBird(i);
+			HMM::Sequence sequence;
+			for(int j = 0; j < bird.getSeqLength(); j++) {
+				sequence.push_back(bird.getObservation(j));
+			}
+			cerr << i << " " << pSpecies[i] << " " << hmms[pSpecies[i]].A[0][0] << endl;
+			BaumWelch bw(&hmms[pSpecies[i]], sequence);
+			bw.train();
 		}
 	}
 

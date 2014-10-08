@@ -4,11 +4,14 @@
 
 #include <iostream>
 #include <fstream>
+#include <time.h>
 
 bool gVerbose = false;
 
 int main(int argc,char **argv)
 {
+
+    srand (time(NULL));
     // Parse parameters
     bool lCreateServer = false;
     std::string lLoadFilename = "SouthEmissions.in";

@@ -26,6 +26,19 @@ public:
 		}
 	}
 
+	void scramble() {
+		for(int i = 0; i < n(); i++) {
+			double sum = 0;
+			for(int j = 0; j < m(); j++) {
+				data[i][j] = rand();
+				sum += data[i][j];
+			}
+			for(int j = 0; j < m(); j++) {
+				data[i][j] /= sum;
+			}
+		}
+	}
+
 	int n() {
 		return data.size();
 	}

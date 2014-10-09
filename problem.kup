@@ -1,6 +1,6 @@
 duckhunt:
 	kth:ai:duckhunt
-	src/player.cpp src/*.hpp
+	src/Player.cpp src/{BaumWelch,helpers,Matrix,Player,HiddenMarkovModel}.hpp
 
 hmm3:
 	kth:ai:hmm3

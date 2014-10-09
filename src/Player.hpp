@@ -1,9 +1,9 @@
 #ifndef _DUCKS_PLAYER_HPP_
 #define _DUCKS_PLAYER_HPP_
 
-#include "../lib/Deadline.hpp"
-#include "../lib/GameState.hpp"
-#include "../lib/Action.hpp"
+#include "Deadline.hpp"
+#include "GameState.hpp"
+#include "Action.hpp"
 #include <vector>
 
 namespace ducks

@@ -165,7 +165,7 @@ class BaumWelch {
 
 public:
 
-	int maxIterations = 10;
+	int maxIterations = 15;
 
 	BaumWelch(HMM * hmm, HMM::Sequence sequence) {
 		this->hmm = hmm;

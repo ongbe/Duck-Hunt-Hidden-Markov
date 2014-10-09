@@ -3,7 +3,6 @@
 
 #include "Matrix.hpp"
 #include "HiddenMarkovModel.hpp"
-#include <math.h>
 #include <utility>
 
 
@@ -154,9 +153,19 @@ class BaumWelch {
 		return sum();
 	}
 
+	void no0(Matrix<> * matrix) {
+		for(int i = 0; i < matrix->n(); i++) {
+			for(int j = 0; j < matrix->m(); j++) {
+				if((*matrix)[i][j] == 0.0) {
+					(*matrix)[i][j] = 1E-100;
+				}
+			}
+		}
+	}
+
 public:
 
-	int maxIterations = 1;
+	int maxIterations = 10;
 
 	BaumWelch(HMM * hmm, HMM::Sequence sequence) {
 		this->hmm = hmm;
@@ -169,7 +178,9 @@ public:
 	double train() {
 		double stability;
 		for(int i = 0; i < maxIterations; i++) {
-			cerr << i << endl << hmm->str() << endl;
+			no0(&hmm->A);		// XXX Blä
+			no0(&hmm->B);
+			no0(&hmm->q);
 			stability = compute();
 		}
 		return stability;

@@ -9,7 +9,7 @@
 
 namespace ducks
 {
-
+	vector<bool> knownSpecies;
 	vector<HMM> hmms;				// species -> hmm
 	int round = -1;
 
@@ -24,7 +24,17 @@ namespace ducks
 			iniq.scramble();
 			HMM hmm(iniA, iniB, iniq);
 			hmms.push_back(hmm);
+			knownSpecies.push_back(false);
 		}
+	}
+
+	HMM::Sequence observe(GameState pState, int i) {
+		Bird bird = pState.getBird(i);
+		HMM::Sequence sequence;
+		for(int j = 0; j < bird.getSeqLength(); j++) {
+			sequence.push_back(bird.getObservation(j));
+		}
+		return sequence;
 	}
 
 	Action Player::shoot(const GameState &pState, const Deadline &pDue) {
@@ -40,8 +50,29 @@ namespace ducks
 		 * Here you should write your clever algorithms to guess the species of each bird.
 		 * This skeleton makes no guesses, better safe than sorry!
 		 */
-		cerr << "Question" << endl;
-		std::vector<ESpecies> lGuesses(pState.getNumBirds(), SPECIES_PIGEON);
+		std::vector<ESpecies> lGuesses;
+		for(int i = 0; i < pState.getNumBirds(); i++) {
+			vector<double> chance(COUNT_SPECIES, -1);
+			for(int j = 0; j < COUNT_SPECIES; j++) {
+				if(knownSpecies[j]) {
+					chance[j] = hmms[j].test(observe(pState, i));
+				}
+			}
+			int argmax = (int) SPECIES_PIGEON;
+			double max = 0;
+			for(int i = 0; i < chance.size(); i++) {
+				if(chance[i] > max) {
+					max = chance[i];
+					argmax = i;
+				}
+			}
+			lGuesses.push_back((ESpecies) argmax);
+		}
+		cerr << "I guess: ";
+		for(int i = 0; i < lGuesses.size(); i++) {
+			cerr << lGuesses[i] << " ";
+		}
+		cerr << endl;
 		return lGuesses;
 	}
 
@@ -56,17 +87,14 @@ namespace ducks
 		/*
 		 * If you made any guesses, you will find out the true species of those birds in this function.
 		 */
-		cerr << "REVeal!" << endl;
+		cerr << "It was   ";
 		for(int i = 0; i < pSpecies.size(); i++) {
-			Bird bird = pState.getBird(i);
-			HMM::Sequence sequence;
-			for(int j = 0; j < bird.getSeqLength(); j++) {
-				sequence.push_back(bird.getObservation(j));
-			}
-			cerr << i << " " << pSpecies[i] << " " << hmms[pSpecies[i]].A[0][0] << endl;
-			BaumWelch bw(&hmms[pSpecies[i]], sequence);
+			cerr << pSpecies[i] << " ";
+			knownSpecies[pSpecies[i]] = true;
+			BaumWelch bw(&hmms[pSpecies[i]], observe(pState, i));
 			bw.train();
 		}
+		cerr << endl;
 	}
 
 

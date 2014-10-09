@@ -54,7 +54,7 @@ public:
 		return ss.str();
 	}
 
-	double test(Emission emission) {
+	double test(Sequence emission) {
 		vector<double> last(K());
 		for(int i = 0; i < K(); i++) {
 			last[i] = q[0][i] * B[i][emission[0]];
